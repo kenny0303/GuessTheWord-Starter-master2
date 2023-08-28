@@ -49,6 +49,7 @@ class ScoreFragment : Fragment() {
 
 
 
+
         // Inflate view and obtain an instance of the binding class.
         val binding: ScoreFragmentBinding = DataBindingUtil.inflate(
                 inflater,
@@ -59,9 +60,15 @@ class ScoreFragment : Fragment() {
 
 
         // Add observer for score
-        viewModel.score.observe(viewLifecycleOwner, Observer { newScore ->
+       /** viewModel.score.observe(viewLifecycleOwner, Observer { newScore ->
             binding.scoreText.text = newScore.toString()
-        })
+        })*/
+
+        binding.scoreViewModel = viewModel
+
+        // Specify the fragment view as the lifecycle owner of the binding.
+// This is used so that the binding can observe LiveData updates
+        binding.lifecycleOwner = viewLifecycleOwner
 
         // Navigates back to game when button is pressed
         viewModel.eventPlayAgain.observe(viewLifecycleOwner, Observer { playAgain ->
@@ -71,7 +78,7 @@ class ScoreFragment : Fragment() {
             }
         })
 
-        binding.playAgainButton.setOnClickListener {  viewModel.onPlayAgain()  }
+       // binding.playAgainButton.setOnClickListener {  viewModel.onPlayAgain()  }
 
         return binding.root
     }
